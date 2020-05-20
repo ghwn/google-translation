@@ -1,6 +1,6 @@
 # google-translation
 
-This project helps you translate text by crawling Google translation page.
+A project to translate text by crawling Google translation page.
 
 
 ## Prerequisites
