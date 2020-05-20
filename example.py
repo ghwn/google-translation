@@ -9,9 +9,9 @@ def main():
 
     translator = GoogleTranslator()
     for sentence in sentences:
-        result = translator.translate(sentence, src="en", dest="ko")
+        translation = translator.translate(sentence, src="en", dest="ko")
         print(sentence)
-        print(result, '\n')
+        print(translation, '\n')
 
 
 if __name__ == "__main__":

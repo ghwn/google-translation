@@ -57,17 +57,15 @@ class GoogleTranslator:
         base_url = "https://translate.google.com/#view=home&op=translate&sl=%s&tl=%s" % (src, dest)
 
         # Get HTML source by sending the URL
-        url = "%s&text=%s" % (base_url, urllib.parse.quote(text))
+        url = base_url + "&text=" + urllib.parse.quote(text)
         self.web_driver.get(url)
         time.sleep(0.3)
         soup = bs4.BeautifulSoup(self.web_driver.page_source, "html.parser")
 
         # Extract translations from the HTML source
-        translation_part = soup.find("span", "tlid-translation translation")
-        translations = []
-        for content in translation_part.contents:
-            if isinstance(content, bs4.element.NavigableString):
-                continue
-            translation = re.sub(r"<.+?>", "", content.__str__())
-            translations.append(translation)
-        return ' '.join(translations).strip()
+        page_element = soup.find("span", "tlid-translation translation")
+        translations = [re.sub(r"<.+?>", "", str(content))
+                        for content in page_element.contents
+                        if not isinstance(content, bs4.element.NavigableString)]
+        translation = ' '.join(translations).strip()
+        return translation
